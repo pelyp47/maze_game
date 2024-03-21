@@ -1,0 +1,24 @@
+.control-panel {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    flex-wrap: wrap-reverse;
+    width: 15vw;
+    background-color: #1c2931;
+    grid-area: control-panel;
+    align-self: center;
+    justify-self: center;
+}
+.control-panel__btn {
+    box-sizing: border-box;
+    display: block;
+    aspect-ratio: 1;
+    width: 5vw;
+    background-color: #6d9ab6;
+    border: 1px solid #1c2931;
+    color: #1c2931;
+    font-family: monospace;
+}
+

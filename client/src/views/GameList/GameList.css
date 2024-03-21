@@ -1,0 +1,35 @@
+
+.game-list {
+    flex-grow: 1;
+
+    overflow-y: scroll;
+}
+.game-list__new {
+    font-size: 5vh;
+    font-family: monospace;
+    background-color: #6d9ab6;
+    padding: 5px;
+    color: #21002b;
+    border: none;
+}
+
+.game-list__item {
+    font-family: monospace;
+    font-size: 5vh;
+    display: flex;
+    margin: 10px;
+    margin-left: 0;
+    gap: 10px;
+    padding: 10px;
+    justify-content: space-between;
+    border-top: 2px dashed #64b5b8;
+    border-bottom: 2px dashed #64b5b8;
+}
+
+.game-list__join {
+    font-family: monospace;
+    background-color: #6d9ab6;
+    padding: 5px;
+    color: #21002b;
+    border: none;
+}

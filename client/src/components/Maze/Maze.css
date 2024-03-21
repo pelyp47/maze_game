@@ -1,0 +1,36 @@
+.maze {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #1c2931;
+    color: #1c2931;
+    grid-area: maze;
+    position: relative;
+    border-bottom: 2px dashed #64b5b8;
+}
+.maze__row {
+    display: flex;
+}
+
+.maze__cell {
+    font-size: 3vmin;
+    font-family: monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4vmin;
+    aspect-ratio: 1;
+}
+.maze__row:nth-of-type(2n) .maze__cell:nth-of-type(2n):not(._block),
+.maze__row:nth-of-type(2n+1) .maze__cell:nth-of-type(2n+1):not(._block) {
+    background-color: #64b5b8;
+}
+
+.maze__row:nth-of-type(2n) .maze__cell:nth-of-type(2n+1):not(._block),
+.maze__row:nth-of-type(2n+1) .maze__cell:nth-of-type(2n):not(._block) {
+    background-color: #6d9ab6;
+}
+._block {
+    background-color: #1c2931;
+}

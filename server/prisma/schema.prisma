@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//models
+model User {
+  id     Int    @id @default(autoincrement())
+  name   String @unique
+  online Boolean @default(false)
+
+  games User_Game[]
+}
+
+model User_Game {
+  id     Int @id @default(autoincrement())
+  userId Int
+  gameId Int
+  winner Boolean @default(false)
+
+  messages Message[]
+  moves    Move[]
+
+  user User @relation(fields: [userId], references: [id])
+  game Game @relation(fields: [gameId], references: [id])
+}
+
+model Game {
+  id   Int @id @default(autoincrement())
+  maze Json
+  time DateTime
+  
+  users User_Game[]
+}
+
+model Message {
+  id        Int @id @default(autoincrement())
+  time      DateTime
+  text      String
+  contextId Int
+
+  context User_Game @relation(fields: [contextId], references: [id])
+}
+
+model Move {
+  id        Int @id @default(autoincrement())
+  time      DateTime
+  commandId Int
+  contextId Int
+
+  command Command @relation(fields: [commandId], references: [id])
+  context User_Game @relation(fields: [contextId], references: [id])
+}
+
+model Command {
+  id      Int @id
+  text    String @unique
+  xChange Int
+  yChange Int
+
+  moves Move[]
+}

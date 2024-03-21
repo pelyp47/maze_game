@@ -1,0 +1,18 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    background-color: #1c2931;
+    color: #6d9ab6;
+    padding: 10px;
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+.home__greetings {
+    font-family: monospace;
+    font-size: 7vh;
+}
+
+.home__greetings ._highlighted {
+    color: #64b5b8;
+}
