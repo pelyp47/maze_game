@@ -14,7 +14,8 @@ export default function Chat() {
     async function sendMessage() {
         const text = message.trim()
         const commandId = ["/up", "/right", "/down", "/left"].indexOf(text)+1
-        if(commandId!==0) {
+        if(commandId!==0) {     
+            if(!yourMove) return
             await fetch(`http://localhost:3000/game/${currGameId}/player/${id}/move`, {
                 method: "POST",
                 headers: {

@@ -51,7 +51,7 @@ export default function Home() {
             dispatch(currGameUpdate(id))
             .then(()=>{
                 dispatch( updateGameList()).then(()=>{
-                    (gameStarted?new Promise.resolve():dispatch(currGameUpdate())).then(()=>{
+                    dispatch(currGameUpdate()).then(()=>{
                         dispatch(currGameStateUpdate(id)).then(()=>{
                             dispatch(currGameChatUpdate(id)).then(()=>{
                                 setUpdates(updates+1)

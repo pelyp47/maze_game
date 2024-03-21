@@ -3,8 +3,9 @@ import "./ControlPanel.css"
 
 export default function ControlPanel() {
     const {id} = useSelector(state=> state.logIn)
-    const {currGameId} = useSelector(state=>state.currGame)
+    const {currGameId, yourMove} = useSelector(state=>state.currGame)
     async function makeMove(commandId) {
+        if(!yourMove) return
         await fetch(`http://localhost:3000/game/${currGameId}/player/${id}/move`, {
             method: "POST",
             headers: {

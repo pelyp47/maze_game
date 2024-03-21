@@ -28,7 +28,7 @@ export const currGameStateUpdate = createAsyncThunk("currGame/move", async (user
 })
 
 const CurrGameSlice = createSlice({
-    name: "gameList",
+    name: "currGame",
     initialState: {
         currGameId: 0,
         gameStarted: false,
@@ -58,8 +58,11 @@ const CurrGameSlice = createSlice({
             state.gameTime = action.payload.time
         })
         build.addCase(currGameUpdate.fulfilled, (state, action)=>{
+            if (action.payload.error||state.winner!==null) return
             if(!action.payload.length) return
             const game = action.payload[0]
+            
+            
             console.log(game)
             state.currGameId = game.id || 0
             if(state.currGameId == 0) return
@@ -68,12 +71,14 @@ const CurrGameSlice = createSlice({
                 state.gameStarted = game.users.length===2
                 const context = game.users.find(el=>el.userId === Number(localStorage.getItem("id")))
                 state.contextId = context.id
+                if(state.yourMove===null) {
+                    state.yourMove = game.users[0].id === state.contextId
+                }
             }
             state.gameTime = game.time
         })
 
         build.addCase(currGameChatUpdate.fulfilled, (state, action)=> {
-            if (action.payload.error) return
             let moves = action.payload.moves.moves.map(move=>{
                     return {
                         text: `(going ${["up", "right", "down", "left"][move.commandId-1]})`,
@@ -82,22 +87,19 @@ const CurrGameSlice = createSlice({
                     }
             })
             if(action.payload.moves.currState.winnerId!==null) {        
-                state.winner = action.payload.moves.currState.winnerId===state.contextId;
                 console.log(action.payload)
-                moves.push({text: `You ${action.payload.moves.currState.winnerId?"won":"lost"}!`, time: moves[moves.length-1].time, contextId: null});
-
+                moves.push({text: `You ${action.payload.moves.currState.winnerId===state.contextId?"won":"lost"}!`, time: moves[moves.length-1].time, contextId: null});
+                state.winner = action.payload.moves.currState.winnerId === state.contextId
             }
             state.currChat = [...action.payload.messages, ...moves].sort((a,b)=>new Date(a.time)- new Date(b.time))
         })
         build.addCase(currGameStateUpdate.fulfilled, (state, action)=>{
+            
             if(action.payload.error) return
             if(action.payload.currState) {
                 state.currMaze = action.payload.currState.body
                 console.log(action.payload.moves)
-                if(!action.payload.moves.length) {
-                    console.log(action.payload.currState.users)
-                    return
-                }
+                if(!action.payload.moves.length) return
                 state.yourMove =action.payload.moves[action.payload.moves.length - 1].contextId !== state.contextId
             }
         })

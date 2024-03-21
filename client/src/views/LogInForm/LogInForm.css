@@ -1,0 +1,42 @@
+.log-in {
+    font-family: monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: #1c2931;
+}
+
+.log-in__title {
+    font-size: 10vh;
+    font-weight: 700;
+    color: #64b5b8;
+}
+
+.log-in__input {
+    font-family: monospace;
+    font-size: 5vh;
+    text-align: center;
+    border: none;
+    background-color: #6d9ab6;
+}
+
+.log-in__input:focus {
+    outline: none;
+}
+
+.log-in__error {
+    font-size: 3vh;
+    color: #64b5b8;
+}
+
+.log-in__submit {
+    font-family: monospace;
+    font-size: 4vh;
+    padding: 1vh 1vw;
+    border: none;
+    background-color: #64b5b8;
+}

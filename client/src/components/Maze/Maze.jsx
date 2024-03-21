@@ -4,10 +4,7 @@ import { currGameLeave } from "../../globalState/CurrGame"
 export default function Maze() {
     const {currMaze, winner} = useSelector(state=>state.currGame)
     const dispatch = useDispatch()
-    function giveUp() {
-
-    }
-    function exit() {
+    function leave() {
         return dispatch(currGameLeave())
     }
     return <div className="maze">
@@ -26,6 +23,6 @@ export default function Maze() {
                 })}
             </div>
         })}
-        <button className="maze_cancell-btn" onClick={winner===null?()=>giveUp():exit()}>{winner===null?"give up":"exit"}</button>
+        <button className="maze_cancell-btn" onClick={leave}>{winner===null?"give up":"exit"}</button>
     </div>
 }

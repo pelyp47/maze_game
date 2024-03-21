@@ -41,10 +41,10 @@ export default function LogInForm() {
         console.log(user)
         dispatch(logIn({id:user.id, name:user.name}))
     }
-    return <>
-        <p>Please enter your name:</p>
-        <input type="text" value={name} onChange={handleInput} required={true}/>
-        {nameAvailibility||<span>Name is already taken</span>}
-        <button type="submit" onClick={handleSubmit}>Create account</button>
-    </>
+    return <div className="log-in">
+        <p className="log-in__title">Please enter your name:</p>
+        <input class="log-in__input" type="text" value={name} onChange={handleInput} required={true}/>
+        {nameAvailibility||<span class="log-in__error">Name is already taken</span>}
+        <button type="submit" onClick={handleSubmit} class="log-in__submit">Create account</button>
+    </div>
 }
