@@ -34,3 +34,14 @@
 ._block {
     background-color: #1c2931;
 }
+
+.maze__cancell-btn {
+    font-family: monospace;
+    text-align: center;
+    border: none;
+    background-color: #6d9ab6;
+}
+
+.maze__cancell-btn:focus {
+    outline: none;
+}

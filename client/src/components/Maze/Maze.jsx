@@ -23,6 +23,6 @@ export default function Maze() {
                 })}
             </div>
         })}
-        <button className="maze_cancell-btn" onClick={leave}>{winner===null?"give up":"exit"}</button>
+        <button className="maze__cancell-btn" onClick={leave}>{winner===null?"give up":"exit"}</button>
     </div>
 }
