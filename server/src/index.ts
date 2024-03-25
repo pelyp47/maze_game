@@ -11,13 +11,14 @@ import { userService } from "./services";
 dotenv.config();
 const app :Express = express();
 const port:number  = Number(process.env.PORT)||3000;
+const domain: string = process.env.DOMAIN||"localhost";
 
 app.use(cors<Request>());
-app.use(express.json())
+app.use(express.json());
 app.use(mainRouter);
 
 const server = app.listen(port, ()=>{
-    console.log(`http://localhost:${port}`);
+    console.log(`http://${domain}:${port}`);
 });
 
 //adding websockets
@@ -36,7 +37,7 @@ WSServer.on('connection', (ws) => {
   }
   ws.send(JSON.stringify({messageObj:userState}))
   ws.on('message', async (message: string) => {
-    await sleep(10000)
+    await sleep(1000)
     const messageObj:{
       userState: {
         id: number,

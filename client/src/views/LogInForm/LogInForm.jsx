@@ -11,7 +11,7 @@ export default function LogInForm() {
 
     useEffect(()=>{
         async function checkAvailibility() {
-            const userData = await fetch(`http://localhost:3000/user?${new URLSearchParams({
+            const userData = await fetch(`${import.meta.env.VITE_DOMAIN}/user?${new URLSearchParams({
                 name
             })}`)
             const user = await userData.json()
@@ -28,7 +28,7 @@ export default function LogInForm() {
     async function handleSubmit(e) {
         e.preventDefault()
         if(!nameAvailibility) return
-        const userData = await fetch("http://localhost:3000/user", {
+        const userData = await fetch(`${import.meta.env.VITE_DOMAIN}/user`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -43,8 +43,8 @@ export default function LogInForm() {
     }
     return <div className="log-in">
         <p className="log-in__title">Please enter your name:</p>
-        <input class="log-in__input" type="text" value={name} onChange={handleInput} required={true}/>
-        {nameAvailibility||<span class="log-in__error">Name is already taken</span>}
-        <button type="submit" onClick={handleSubmit} class="log-in__submit">Create account</button>
+        <input className="log-in__input" type="text" value={name} onChange={handleInput} required={true}/>
+        {nameAvailibility||<span className="log-in__error">Name is already taken</span>}
+        <button type="submit" onClick={handleSubmit} className="log-in__submit">Create account</button>
     </div>
 }

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 export const updateGameList = createAsyncThunk("gameList/update", async ()=>{
-    const GameListData = await fetch("http://localhost:3000/game")
+    const GameListData = await fetch(`${import.meta.env.VITE_DOMAIN}/game`)
     return GameListData.json()
 })
 

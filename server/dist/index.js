@@ -12,11 +12,12 @@ const services_1 = require("./services");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = Number(process.env.PORT) || 3000;
+const domain = process.env.DOMAIN || "localhost";
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(routers_1.default);
 const server = app.listen(port, () => {
-    console.log(`http://localhost:${port}`);
+    console.log(`http://${domain}:${port}`);
 });
 //adding websockets
 async function sleep(ms) {
@@ -31,7 +32,7 @@ WSServer.on('connection', (ws) => {
     };
     ws.send(JSON.stringify({ messageObj: userState }));
     ws.on('message', async (message) => {
-        await sleep(10000);
+        await sleep(1000);
         const messageObj = JSON.parse(message);
         if (!(userState.online && userState.id)) {
             const newUser = await services_1.userService.updateUser(messageObj.userState.id, "", true);

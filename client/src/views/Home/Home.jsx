@@ -16,7 +16,7 @@ export default function Home() {
     const [updates, setUpdates] = useState(0)
     useEffect(()=>{
         async function checkUser() {
-            const userData = await fetch(`http://localhost:3000/user/${id}`)
+            const userData = await fetch(`${import.meta.env.VITE_DOMAIN}/user/${id}`)
             const user = await userData.json()
             if(user.name!==name) {
                 dispatch(logOut())
@@ -24,7 +24,7 @@ export default function Home() {
         }
         checkUser()
         
-        const ws = new WebSocket("ws://localhost:3000")
+        const ws = new WebSocket(import.meta.env.VITE_WS_DOMAIN)
         async function createWSConnection() {
             ws.addEventListener("open", ()=>{
                 ws.send(JSON.stringify(messageObj))

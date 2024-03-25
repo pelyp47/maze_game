@@ -1,5 +1,7 @@
 **docker config:**
 ```
+chmod +x ./docker-start.sh
+cacls ./docker-start.sh /g everyone:f
 docker pull postgres
 docker run --name postgres-container -e POSTGRES_PASSWORD=bebra228 -e POSTGRES_DB=test_game -e POSTGRES_USER=bober -p 5432:5432 -d postgres
 ```
@@ -13,6 +15,6 @@ docker run --name postgres-container -e POSTGRES_PASSWORD=bebra228 -e POSTGRES_D
 
 
 **migration**
-`npx prisma migrate dev --name init`
+``
 **seed**
-`npx prisma db seed`
+``

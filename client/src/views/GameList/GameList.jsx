@@ -7,7 +7,7 @@ export default function GameList() {
     const {gameArray} = useSelector(state=>state.gameList)
     const {id} = useSelector(state=>state.logIn)
     async function addGame() {
-        const contextData = await fetch("http://localhost:3000/game", {
+        const contextData = await fetch(`${import.meta.env.VITE_DOMAIN}/game`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -20,7 +20,7 @@ export default function GameList() {
         dispatch(CurrGameJoin(gameId))
     }
     async function joinGame(gameId) {
-        fetch(`http://localhost:3000/game/${gameId}/player`, {
+        fetch(`${import.meta.env.VITE_DOMAIN}/game/${gameId}/player`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

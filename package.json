@@ -1,0 +1,23 @@
+{
+  "name": "test_game",
+  "version": "1.0.0",
+  "description": "**docker config:**\r ```\r docker pull postgres\r docker run --name postgres-container -e POSTGRES_PASSWORD=bebra228 -e POSTGRES_DB=test_game -e POSTGRES_USER=bober -p 5432:5432 -d postgres\r ```",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start-db && start npm run start-server && start npm run start-client",
+    "start-client": "cd ./client/ && npm run dev && start http://localhost:5173/",
+    "start-server": "cd ./server/ && npm start",
+    "start-db": "docker-start.cmd && npx prisma db seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pelyp47/maze_game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pelyp47/maze_game/issues"
+  },
+  "homepage": "https://github.com/pelyp47/maze_game#readme"
+}

@@ -36,6 +36,7 @@
 }
 
 .maze__cancell-btn {
+    padding: 5px;
     font-family: monospace;
     text-align: center;
     border: none;

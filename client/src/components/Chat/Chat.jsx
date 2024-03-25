@@ -14,9 +14,10 @@ export default function Chat() {
     async function sendMessage() {
         const text = message.trim()
         const commandId = ["/up", "/right", "/down", "/left"].indexOf(text)+1
+        console.log(commandId)
         if(commandId!==0) {     
             if(!yourMove) return
-            await fetch(`http://localhost:3000/game/${currGameId}/player/${id}/move`, {
+            await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/move`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -29,7 +30,7 @@ export default function Chat() {
             setMessage("")
             return
         }
-        await fetch(`http://localhost:3000/game/${currGameId}/player/${id}/message`, {
+        await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/message`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

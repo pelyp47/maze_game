@@ -6,7 +6,7 @@ export default function ControlPanel() {
     const {currGameId, yourMove} = useSelector(state=>state.currGame)
     async function makeMove(commandId) {
         if(!yourMove) return
-        await fetch(`http://localhost:3000/game/${currGameId}/player/${id}/move`, {
+        await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/move`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
