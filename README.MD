@@ -20,14 +20,14 @@ or
 npm run start
 ```
 in bash(gitbash) terminal in VSCode\
-
+\
 **MacOs or Linux**
 ```
 npm run start
 ```
 in bash(gitbash) terminal in VSCode\
 \
-*all "start" scripts should be executed after downloading packages in client and server folders, and added .env files*
+*all "start" scripts should be executed after downloading packages in client and server folders, and added .env files*\
 *you should execute "start" scripts after opening and signing in your docker application*\
 *all "start" scripts should be executed from root directory*\
 *in case of an error initialazing project in either system with "start" script, please delete created container in docker (not image) and try again.*\
@@ -38,7 +38,7 @@ in bash(gitbash) terminal in VSCode\
 *Port: `5432`*\
 *Maintenance database: `test_game`*\
 *Username: `bober`*\
-*Password: `bebra228`*\
+*Password: `bebra228`*
 
 <!-- 
 **migration**
