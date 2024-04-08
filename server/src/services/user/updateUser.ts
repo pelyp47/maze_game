@@ -4,6 +4,7 @@ const prisma = new PrismaClient()
 
 async function updateUser(id:number, name:string, online:boolean) {
     try {
+        console.log(id, name, online);
         if(id===0) throw new Error("id can't be 0")
         const updatedUser = await prisma.user.update({
             where: {

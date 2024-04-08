@@ -9,6 +9,7 @@ export default function CurrGame() {
     const {gameTime, gameStarted} = useSelector(state=>state.currGame)
     const [time, setTime] = useState(new Date())
     useEffect(()=>{
+        if(gameStarted) return
         const interval = setInterval(()=>{setTime(new Date())}, 1000)
         return () =>{
             clearInterval(interval)

@@ -8,10 +8,11 @@ async function getHandler(req, res) {
     const moves = await services_1.moveService.moveGame(Number(gameId));
     const games = await services_1.gameService.gameAll();
     const game = games.find(el => el.id === Number(gameId));
+    const winnerId = game?.users.find((user) => user.winner === true)?.id || null;
     if (!game)
         return res.status(401).json({ error: "game wasn't found" });
     const currState = await utils_1.utils.mazeState(game.maze, moves);
-    return res.json({ currState, moves });
+    return res.json({ currState: { ...currState, winnerId }, moves });
 }
 exports.getHandler = getHandler;
 async function postHandler(req, res) {

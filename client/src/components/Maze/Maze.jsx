@@ -1,11 +1,29 @@
 import { useDispatch, useSelector } from "react-redux"
 import "./Maze.css"
-import { currGameLeave } from "../../globalState/CurrGame"
+import { currGameChatUpdate, currGameLeave, currGameStateUpdate } from "../../globalState/CurrGame"
+import { updateGameList } from "../../globalState/GameList"
+import { useWSContext } from "../../views/Home/Home"
 export default function Maze() {
-    const {currMaze, winner} = useSelector(state=>state.currGame)
+    const {currMaze, winner, currGameId} = useSelector(state=>state.currGame)
     const dispatch = useDispatch()
-    function leave() {
-        return dispatch(currGameLeave())
+    const {id} = useSelector(state=>state.logIn)
+    const {WS} = useWSContext()
+    async function leave() {
+        if(!winner) {
+            const winner = await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/giveUp`)
+            
+            dispatch(currGameStateUpdate(id)).then(()=>{
+                dispatch(currGameChatUpdate(id)).then(()=>{
+                    dispatch(updateGameList()).then(()=>{
+                        dispatch(currGameLeave())
+                    })
+                })
+            })
+            WS.send(JSON.stringify({type: "MOVE", payload: {gameId: currGameId}}))
+            return
+        }
+        dispatch(updateGameList())
+        dispatch(currGameLeave())
     }
     return <div className="maze">
         {currMaze.map((row, i)=>{
@@ -23,6 +41,6 @@ export default function Maze() {
                 })}
             </div>
         })}
-        <button className="maze__cancell-btn" onClick={leave}>{winner===null?"give up":"exit"}</button>
+        <button className="maze__cancell-btn" onClick={()=>leave()}>{winner===null?"give up":"exit"}</button>
     </div>
 }

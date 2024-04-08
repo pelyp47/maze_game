@@ -1,25 +1,20 @@
 import { createSlice} from "@reduxjs/toolkit";
-
 const WSSlice = createSlice({
     name: "WS",
     initialState: {
-        messageObj:{
-            userState: {
-              id: Number(localStorage.getItem("id")),
-              online: true
-            }
-        },
+        WSClient: {},
         error: ""
     },
     reducers: {
-        setWSObject: (state, action) => {
-            state.messageObj = action.payload.messageObj
+        setWSClient: (state, action) => {
+            state.WSClient.send = action.payload.WSSend
+            console.log(action.payload)
         },
-        reportWSError: (state, action) => {
-            state.error = action.payload.error
+        sendMessage: (state,action) => {
+            state.WSClient.send(JSON.stringify(action.payload))
         }
     }
 })
 
 export default WSSlice.reducer
-export const {setWSObject, reportWSError} = WSSlice.actions
+export const {setWSClient, sendMessage} = WSSlice.actions

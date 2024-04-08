@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import "./Chat.css"
+import { useWSContext } from "../../views/Home/Home"
+import { currGameChatUpdate, currGameStateUpdate } from "../../globalState/CurrGame"
 
 export default function Chat() {
     const {id} = useSelector(state=>state.logIn)
     const {currChat, currGameId, contextId, yourMove} = useSelector(state=>state.currGame)
+    const dispatch = useDispatch()
     const messages = useRef(null)
+    const {WS} = useWSContext()
     useEffect(()=>{
         messages.current.scrollTo(0, messages.current.scrollHeight)
     }, [currChat.length])
@@ -27,10 +31,13 @@ export default function Chat() {
                     time: new Date()
                 })
             })
+            WS.send(JSON.stringify({type:"MOVE", payload:{gameId: currGameId}}))
+            dispatch(currGameStateUpdate(id))
+            dispatch(currGameChatUpdate(id))
             setMessage("")
             return
         }
-        await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/message`, {
+        const messageData = await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/message`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -40,6 +47,8 @@ export default function Chat() {
                 time: new Date()
             })
         })
+        dispatch(currGameChatUpdate(id))
+        WS.send(JSON.stringify({type:"MESSAGE", payload:{gameId:currGameId}}))
         setMessage("")
     }
     console.log(currChat)

@@ -22,48 +22,74 @@ const server = app.listen(port, ()=>{
 });
 
 //adding websockets
-async function sleep(ms:number): Promise<(arg0:unknown)=>void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 const WSServer = new WS.Server({ server});
-
-WSServer.on('connection', (ws) => {
-  console.log('New WebSocket client connected');
-  
-  const userState = {
-    id: 0,
-    online: false
-  }
-  ws.send(JSON.stringify({messageObj:userState}))
-  ws.on('message', async (message: string) => {
-    await sleep(1000)
-    const messageObj:{
-      userState: {
-        id: number,
-        online: boolean
-      }
-    } = JSON.parse(message)
-
-    if(!(userState.online&&userState.id)) {
-      const newUser = await userService.updateUser(messageObj.userState.id, "", true)
-      if (!newUser) return ws.send(`${JSON.stringify(userState)}`);
-
-      userState.id = newUser.id
-      userState.online = newUser.online
+let WSUsers:{id:number, ws:WS}[] = []
+function findConnection(id:number) {
+  return WSUsers.find((el)=>el.id=id)
+}
+function closeOther(id:number) {
+  WSUsers = WSUsers.filter(el=>{
+    if (el.id==id) {
+      el.ws.close()
+      return false
     }
-
-    ws.send(`${JSON.stringify(messageObj)}`);
+    return true
+  })
+}
+WSServer.on('connection', async (ws, req) => {
+  console.log('New WebSocket client connected');
+  const id = req.url?.split('?')[1]?.split('=')[1]
+  if(!id) {
+    ws.close()
+    return false
+  }
+  const WSUser ={ws, id: Number(id)}
+  closeOther(WSUser.id)
+  WSUsers.push(WSUser)
+  console.log(WSUsers)
+  console.log(WSUser.id)
+  const newUser = await userService.updateUser(WSUser.id, "", true)
+  ws.on('message', async (message: string) => {
+    const messageObj = JSON.parse(message)
+    const type:"GAME_CREATED"|"MOVE"|"MESSAGE"|"JOIN" = messageObj.type
+    switch(type) {
+      case "GAME_CREATED":
+        WSUsers.forEach((WS)=>{
+          WS.ws.send(JSON.stringify({type}))
+        })
+        break;
+      case "JOIN":
+        WSUsers.forEach((WS)=>{
+          WS.ws.send(JSON.stringify({type:"GAME_JOINED", payload:messageObj.payload}))
+        })
+        break;
+      case "MOVE":
+        WSUsers.forEach((WS)=>{
+          WS.ws.send(JSON.stringify({type:"MOVE_MADE", payload:messageObj.payload}))
+        })
+        break;
+      case "MESSAGE":
+        WSUsers.forEach((WS)=>{
+          WS.ws.send(JSON.stringify({type:"MESSAGE_SENT", payload:messageObj.payload}))
+        })
+        break;
+      default:
+        break;
+    }
   });
 
   ws.on('close', async () => {
-    console.log(userState);
-    const newUser = await userService.updateUser(userState.id, "", false)
-    console.log(newUser)
+    console.log('close connection...');
+    const newUser = await userService.updateUser(Number(WSUser.id), "", false)
+    closeOther(WSUser.id)
+    console.log(WSUsers)
     return newUser
   });
   ws.on('error', async () => {
-    const newUser = await userService.updateUser(userState.id, "", false)
+    console.log('close connection...');
+    const newUser = await userService.updateUser(Number(WSUser.id), "", false)
+    closeOther(WSUser.id)
+    console.log(WSUsers)
     return newUser
   });
 });

@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { CurrGameJoin } from "../../globalState/CurrGame";
+import { CurrGameJoin, currGameStateUpdate, currGameUpdate } from "../../globalState/CurrGame";
 import "./GameList.css"
+import { useWSContext } from "../Home/Home";
 
 export default function GameList() {
     const dispatch = useDispatch()
     const {gameArray} = useSelector(state=>state.gameList)
     const {id} = useSelector(state=>state.logIn)
+    const {WS} = useWSContext()
     async function addGame() {
         const contextData = await fetch(`${import.meta.env.VITE_DOMAIN}/game`, {
             method: "POST",
@@ -18,9 +20,10 @@ export default function GameList() {
         })
         const {gameId} = await contextData.json()
         dispatch(CurrGameJoin(gameId))
+        WS.send(JSON.stringify({type: "GAME_CREATED"}))
     }
     async function joinGame(gameId) {
-        fetch(`${import.meta.env.VITE_DOMAIN}/game/${gameId}/player`, {
+        const game = await fetch(`${import.meta.env.VITE_DOMAIN}/game/${gameId}/player`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -29,6 +32,12 @@ export default function GameList() {
                 userId: id
             })
         })
+        dispatch(CurrGameJoin(gameId)).then(()=>{  
+            dispatch(currGameUpdate(id)).then(()=>{
+                dispatch(currGameStateUpdate(id))
+            })
+        })
+        WS.send(JSON.stringify({type:"JOIN", payload:{gameId}}))
     }
     return <div className="game-list">
         {gameArray.map(game=>{

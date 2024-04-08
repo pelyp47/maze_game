@@ -1,13 +1,17 @@
-import { createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
-const [name, id] = [localStorage.getItem("name"), Number(localStorage.getItem("id"))]
 
+export const signUp = createAsyncThunk("logIn", async ()=>{
+    const name = localStorage.getItem("name")
+    const userId = await fetch(`${import.meta.env.VITE_DOMAIN}/user?name=${name}`);
+    return await userId.json()
+});
 const LogInSlice = createSlice({
     name: "logIn",
     initialState: {
-        loggedIn: !!name&&!!id,
-        name: name||"",
-        id: id||""
+        loggedIn: false,
+        name: "",
+        id: ""
     },
     reducers: {
         logIn: (state, action) => {
@@ -26,6 +30,16 @@ const LogInSlice = createSlice({
             localStorage.setItem("name", "")
             localStorage.setItem("id", "")
         }
+    },
+    extraReducers: (build)=>{
+        build.addCase(signUp.fulfilled, (state, action)=>{
+            if(!action.payload) {
+                return
+            }
+            state.name = action.payload.name
+            state.id = action.payload.id
+            state.loggedIn = true
+        })
     }
 })
 

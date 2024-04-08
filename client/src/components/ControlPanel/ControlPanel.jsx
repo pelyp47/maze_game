@@ -1,12 +1,16 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import "./ControlPanel.css"
+import { useWSContext } from "../../views/Home/Home"
+import { currGameChatUpdate, currGameStateUpdate } from "../../globalState/CurrGame"
 
 export default function ControlPanel() {
     const {id} = useSelector(state=> state.logIn)
     const {currGameId, yourMove} = useSelector(state=>state.currGame)
+    const {WS} = useWSContext()
+    const dispatch = useDispatch()
     async function makeMove(commandId) {
         if(!yourMove) return
-        await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/move`, {
+        const move = await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/move`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -16,6 +20,9 @@ export default function ControlPanel() {
                 commandId
             })
         })
+        WS.send(JSON.stringify({type:"MOVE", payload:{gameId: currGameId}}))
+        dispatch(currGameStateUpdate(id))
+        dispatch(currGameChatUpdate(id))
     }
     return <div className="control-panel">
 

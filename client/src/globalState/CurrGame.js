@@ -9,7 +9,6 @@ export const currGameUpdate = createAsyncThunk("currGame/update", async (userId)
     return gameData.json()
 })
 export const currGameChatUpdate = createAsyncThunk("currGame/chatUpdate", async (userId, {getState})=>{
-    
     const state = getState()
     const gameId = state.currGame.currGameId
     if(gameId === 0) throw new Error()
@@ -71,6 +70,7 @@ const CurrGameSlice = createSlice({
                 state.gameStarted = game.users.length===2
                 const context = game.users.find(el=>el.userId === Number(localStorage.getItem("id")))
                 state.contextId = context.id
+                state.currMaze = game.maze.body
                 if(state.yourMove===null) {
                     state.yourMove = game.users[0].id === state.contextId
                 }
@@ -86,9 +86,9 @@ const CurrGameSlice = createSlice({
                         contextId: move.contextId
                     }
             })
-            if(action.payload.moves.currState.winnerId!==null) {        
+            if(action.payload.moves.currState.winnerId!==null) {    
                 console.log(action.payload)
-                moves.push({text: `You ${action.payload.moves.currState.winnerId===state.contextId?"won":"lost"}!`, time: moves[moves.length-1].time, contextId: null});
+                moves.push({text: `You ${action.payload.moves.currState.winnerId===state.contextId?"won":"lost"}!`, time: moves[moves.length-1]?moves[moves.length-1].time:state.gameTime, contextId: null});
                 state.winner = action.payload.moves.currState.winnerId === state.contextId
             }
             state.currChat = [...action.payload.messages, ...moves].sort((a,b)=>new Date(a.time)- new Date(b.time))

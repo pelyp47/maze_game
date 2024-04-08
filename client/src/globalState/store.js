@@ -9,7 +9,11 @@ const store = configureStore({
         ws: WSReducer,
         gameList: GameListReducer,
         currGame: CurrGameReducer,
-    }
+    },
+    middleware:(getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // Disable serializable check
+    }),
 })
 
 export default store

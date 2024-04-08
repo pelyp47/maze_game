@@ -8,9 +8,10 @@ export async function getHandler(req:Request, res:Response) {
     const moves = await moveService.moveGame(Number(gameId))
     const games = await gameService.gameAll()
     const game = games.find(el=>el.id === Number(gameId))
+    const winnerId = game?.users.find((user)=>user.winner === true)?.id||null
     if(!game) return res.status(401).json({error:"game wasn't found"})
     const currState = await utils.mazeState(game.maze as Maze, moves)
-    return res.json({currState, moves})
+    return res.json({currState:{...currState, winnerId}, moves})
 }
 
 export async function postHandler(req:Request, res:Response) {
