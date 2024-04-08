@@ -20,7 +20,6 @@ export default function Maze() {
                 })
             })
             WS.send(JSON.stringify({type: "MOVE", payload: {gameId: currGameId}}))
-            return
         }
         dispatch(updateGameList())
         dispatch(currGameLeave())
