@@ -10,6 +10,7 @@ export default function LogInForm() {
     const [nameAvailibility, setNameAvailibility] = useState(true)
 
     useEffect(()=>{
+        if(!name) return
         async function checkAvailibility() {
             const userData = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/user?${new URLSearchParams({
                 name
