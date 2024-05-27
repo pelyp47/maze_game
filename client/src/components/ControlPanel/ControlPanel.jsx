@@ -10,7 +10,7 @@ export default function ControlPanel() {
     const dispatch = useDispatch()
     async function makeMove(commandId) {
         if(!yourMove) return
-        const move = await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/move`, {
+        const move = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${currGameId}/player/${id}/move`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

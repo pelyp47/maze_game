@@ -5,8 +5,8 @@ DATABASE_URL="postgresql://bober:bebra228@host.docker.internal:5432/test_game?sc
 ```
 ./client/.env.deveopment
 ```
-VITE_DOMAIN = "http://localhost:3000"
-VITE_WS_DOMAIN = "ws://localhost:3000"
+NEXT_PUBLIC_DOMAIN = "http://localhost:3000"
+NEXT_PUBLIC_WS_DOMAIN = "ws://localhost:3000"
 ```
 \
 **windows**\

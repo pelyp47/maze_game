@@ -21,7 +21,7 @@ export default function Chat() {
         console.log(commandId)
         if(commandId!==0) {     
             if(!yourMove) return
-            await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/move`, {
+            await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${currGameId}/player/${id}/move`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -37,7 +37,7 @@ export default function Chat() {
             setMessage("")
             return
         }
-        const messageData = await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/message`, {
+        const messageData = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${currGameId}/player/${id}/message`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

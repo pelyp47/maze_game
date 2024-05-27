@@ -1,20 +1,20 @@
 import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 export const CurrGameJoin = createAsyncThunk("currGame/join", async (gameId)=>{
-    const gameData = await fetch(`${import.meta.env.VITE_DOMAIN}/game/${gameId}`)
+    const gameData = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${gameId}`)
     return gameData.json()
 })
 export const currGameUpdate = createAsyncThunk("currGame/update", async (userId)=>{
-    const gameData = await fetch(`${import.meta.env.VITE_DOMAIN}/user/${userId}/game/current`);
+    const gameData = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/user/${userId}/game/current`);
     return gameData.json()
 })
 export const currGameChatUpdate = createAsyncThunk("currGame/chatUpdate", async (userId, {getState})=>{
     const state = getState()
     const gameId = state.currGame.currGameId
     if(gameId === 0) throw new Error()
-    const messagesData = await fetch(`${import.meta.env.VITE_DOMAIN}/game/${gameId}/player/${userId}/message`)
+    const messagesData = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${gameId}/player/${userId}/message`)
     const messages = await messagesData.json()
-    const movesData = await fetch(`${import.meta.env.VITE_DOMAIN}/game/${gameId}/player/${userId}/move`)
+    const movesData = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${gameId}/player/${userId}/move`)
     const moves = await movesData.json()
     return {messages, moves}
 })
@@ -22,7 +22,7 @@ export const currGameStateUpdate = createAsyncThunk("currGame/move", async (user
     const state = getState()
     const gameId = state.currGame.currGameId
     if(gameId === 0) throw new Error()
-    const movesData = await fetch(`${import.meta.env.VITE_DOMAIN}/game/${gameId}/player/${userId}/move`)
+    const movesData = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${gameId}/player/${userId}/move`)
     return movesData.json()
 })
 

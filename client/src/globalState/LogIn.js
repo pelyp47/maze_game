@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 export const signUp = createAsyncThunk("logIn", async ()=>{
     const name = localStorage.getItem("name")
-    const userId = await fetch(`${import.meta.env.VITE_DOMAIN}/user?name=${name}`);
+    const userId = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/user?name=${name}`);
     return await userId.json()
 });
 const LogInSlice = createSlice({

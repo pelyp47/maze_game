@@ -11,7 +11,7 @@ export default function LogInForm() {
 
     useEffect(()=>{
         async function checkAvailibility() {
-            const userData = await fetch(`${import.meta.env.VITE_DOMAIN}/user?${new URLSearchParams({
+            const userData = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/user?${new URLSearchParams({
                 name
             })}`)
             const user = await userData.json()
@@ -28,7 +28,7 @@ export default function LogInForm() {
     async function handleSubmit(e) {
         e.preventDefault()
         if(!nameAvailibility) return
-        const userData = await fetch(`${import.meta.env.VITE_DOMAIN}/user`, {
+        const userData = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/user`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

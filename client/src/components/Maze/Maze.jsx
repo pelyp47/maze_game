@@ -10,7 +10,7 @@ export default function Maze() {
     const {WS} = useWSContext()
     async function leave() {
         if(!winner) {
-            const winner = await fetch(`${import.meta.env.VITE_DOMAIN}/game/${currGameId}/player/${id}/giveUp`)
+            const winner = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${currGameId}/player/${id}/giveUp`)
             
             dispatch(currGameStateUpdate(id)).then(()=>{
                 dispatch(currGameChatUpdate(id)).then(()=>{

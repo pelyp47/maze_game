@@ -20,7 +20,7 @@ export default function Home() {
     const {currGameId, gameStarted} = useSelector(state=>state.currGame)
     useEffect(()=>{
         if(!id) return
-        const ws = new WebSocket(`${import.meta.env.VITE_WS_DOMAIN}?id=${id}`)
+        const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_DOMAIN}?id=${id}`)
         window.addEventListener('beforeunload', () => {
             ws.close();
         });
