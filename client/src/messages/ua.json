@@ -1,0 +1,11 @@
+{
+    "Home": {
+        "greetings": "Привіт, ",
+        "submitButton": "Нова гра"
+    },
+    "LogInForm": {
+        "nameInputDescription": "Будь ласка, введіть своє ім'я:",
+        "nameError": "Ім'я вже зайняте",
+        "submitButton": "Створити акаунт"
+    }
+}

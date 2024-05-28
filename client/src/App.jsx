@@ -25,6 +25,8 @@ function App() {
       localStorage.setItem("id", data.id||id)
       if(data.loggedIn) {
         router.push(`/Home?id=${data.id}&name=${data.name}&loggedIn=${data.loggedIn}`)
+      } else {
+        router.push(`/LogInForm`)
       }
     }
     checkLoggedIn()

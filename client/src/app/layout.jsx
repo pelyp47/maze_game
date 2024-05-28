@@ -1,10 +1,14 @@
 import React from 'react'
 import Providers from '../globalState/Providers'
+import {NextIntlClientProvider} from 'next-intl';
+import {getLocale, getMessages} from 'next-intl/server';
 
 
 export default function RootLayout({children}) {
+  const locale = getLocale();
+  const messages = getMessages()
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         <meta charSet="UTF-8" />
         <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -13,9 +17,11 @@ export default function RootLayout({children}) {
       </head>
       <body>
       <div id="root">
+        <NextIntlClientProvider messages={messages}>
         <Providers>
             {children}
         </Providers>
+        </NextIntlClientProvider>
       </div>
       </body>
     </html>

@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react"
+"use client"
+import { createContext, useContext, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { logOut } from "../../globalState/LogIn"
 import { setWSClient } from "../../globalState/WebSocket"
@@ -6,14 +7,15 @@ import { updateGameList } from "../../globalState/GameList"
 import GameList from "../GameList/GameList"
 import CurrGame from "../CurrGame/CurrGame"
 import { currGameChatUpdate, currGameStateUpdate, currGameUpdate } from "../../globalState/CurrGame"
-import "./Home.css"
 import store from "../../globalState/store"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
+import "./Home.css"
+
 const WSContext = createContext()
 export const useWSContext = () => {
     return useContext(WSContext);
 };
-export default function Home() {
+export default function Home({greetings}) {
     const searchParams = useSearchParams()
     const dispatch = useDispatch()
     const [WS, setWS] = useState()
@@ -95,7 +97,7 @@ export default function Home() {
     },[id, loggedIn, name, dispatch, retry])
     return <WSContext.Provider value={{WS}}>
         {currGameId===0?
-        <><p className="home__greetings">Hello, <span className="_highlighted">{name}</span></p>
+        <><p className="home__greetings">{greetings}<span className="_highlighted">{name}</span></p>
         <GameList id={id}/></>:
         <CurrGame id={id}/>
         }

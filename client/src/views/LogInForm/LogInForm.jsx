@@ -1,10 +1,11 @@
+"use client"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { logIn } from "../../globalState/LogIn"
 import "./LogInForm.css"
 import { useRouter } from "next/navigation"
 
-export default function LogInForm() {
+export default function LogInForm({nameInputDescription, nameError, submitButton}) {
     const router=useRouter()
     const dispatch = useDispatch()
 
@@ -44,12 +45,12 @@ export default function LogInForm() {
         console.log(user)
         localStorage.setItem("name", user.name)
         localStorage.setItem("id", user.id)
-        router.push('/Home')
+        router.push(`/Home?id=${user.id}&name=${user.name}&loggedIn=true`)
     }
     return <div className="log-in">
-        <p className="log-in__title">Please enter your name:</p>
+        <p className="log-in__title">{nameInputDescription}</p>
         <input className="log-in__input" type="text" value={name} onChange={handleInput} required={true}/>
-        {nameAvailibility||<span className="log-in__error">Name is already taken</span>}
-        <button type="submit" onClick={handleSubmit} className="log-in__submit">Create account</button>
+        {nameAvailibility||<span className="log-in__error">{nameError}</span>}
+        <button type="submit" onClick={handleSubmit} className="log-in__submit">{submitButton}</button>
     </div>
 }

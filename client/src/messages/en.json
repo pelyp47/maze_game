@@ -1,0 +1,11 @@
+{
+    "Home": {
+        "greetings": "Hello, ",
+        "submitButton": "New game"
+    },
+    "LogInForm": {
+        "nameInputDescription": "Please enter your name:",
+        "nameError": "Name is already taken",
+        "submitButton": "Create account"
+    }
+}
