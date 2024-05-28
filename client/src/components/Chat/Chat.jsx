@@ -4,8 +4,7 @@ import "./Chat.css"
 import { useWSContext } from "../../views/Home/Home"
 import { currGameChatUpdate, currGameStateUpdate } from "../../globalState/CurrGame"
 
-export default function Chat() {
-    const {id} = useSelector(state=>state.logIn)
+export default function Chat({id}) {
     const {currChat, currGameId, contextId, yourMove} = useSelector(state=>state.currGame)
     const dispatch = useDispatch()
     const messages = useRef(null)

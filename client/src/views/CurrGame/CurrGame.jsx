@@ -5,7 +5,7 @@ import Maze from "../../components/Maze/Maze"
 import ControlPanel from "../../components/ControlPanel/ControlPanel"
 import "./CurrGame.css"
 
-export default function CurrGame() {
+export default function CurrGame({id}) {
     const {gameTime, gameStarted} = useSelector(state=>state.currGame)
     const [time, setTime] = useState(new Date())
     useEffect(()=>{
@@ -42,9 +42,9 @@ export default function CurrGame() {
     return <>
         {gameStarted?
         <div className="current-game">
-            <Chat/>
-            <Maze/>
-            <ControlPanel/>
+            <Chat id={id}/>
+            <Maze id={id}/>
+            <ControlPanel id={id}/>
         </div>:
         <div className="waiting-screen">
             <p className="waiting-screen__content">

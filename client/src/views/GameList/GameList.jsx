@@ -3,10 +3,9 @@ import { CurrGameJoin, currGameStateUpdate, currGameUpdate } from "../../globalS
 import "./GameList.css"
 import { useWSContext } from "../Home/Home";
 
-export default function GameList() {
+export default function GameList({id}) {
     const dispatch = useDispatch()
     const {gameArray} = useSelector(state=>state.gameList)
-    const {id} = useSelector(state=>state.logIn)
     const {WS} = useWSContext()
     async function addGame() {
         const contextData = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game`, {

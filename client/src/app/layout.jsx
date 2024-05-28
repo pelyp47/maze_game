@@ -1,4 +1,5 @@
 import React from 'react'
+import Providers from '../globalState/Providers'
 
 
 export default function RootLayout({children}) {
@@ -12,7 +13,9 @@ export default function RootLayout({children}) {
       </head>
       <body>
       <div id="root">
+        <Providers>
             {children}
+        </Providers>
       </div>
       </body>
     </html>

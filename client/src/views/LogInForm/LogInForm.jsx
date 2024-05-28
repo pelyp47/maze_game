@@ -2,8 +2,10 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { logIn } from "../../globalState/LogIn"
 import "./LogInForm.css"
+import { useRouter } from "next/navigation"
 
 export default function LogInForm() {
+    const router=useRouter()
     const dispatch = useDispatch()
 
     const [name,setName] = useState("")
@@ -40,7 +42,9 @@ export default function LogInForm() {
         });
         const user = await userData.json()
         console.log(user)
-        dispatch(logIn({id:user.id, name:user.name}))
+        localStorage.setItem("name", user.name)
+        localStorage.setItem("id", user.id)
+        router.push('/Home')
     }
     return <div className="log-in">
         <p className="log-in__title">Please enter your name:</p>

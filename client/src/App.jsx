@@ -1,12 +1,11 @@
 "use client"
 import './App.css'
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import {useRouter} from 'next/navigation';
 import Home from './views/Home/Home';
 import LogInForm from './views/LogInForm/LogInForm';
-import { signUp } from './globalState/LogIn';
 import { useEffect, useState } from 'react';
-import store from './globalState/store';
 function App() {
+  const router = useRouter()
   const [loggedIn, setLoggedIn] = useState(false)
   const [name, setName] = useState(localStorage.getItem("name"));
   const [id, setId] = useState(localStorage.getItem("id"));
@@ -24,13 +23,14 @@ function App() {
       console.log(data.loggedIn)
       localStorage.setItem("name", data.name||name);
       localStorage.setItem("id", data.id||id)
+      if(data.loggedIn) {
+        router.push(`/Home?id=${data.id}&name=${data.name}&loggedIn=${data.loggedIn}`)
+      }
     }
     checkLoggedIn()
   }, [loggedIn, id, name])
   return (<>
-  <Provider store={store}>
-    {loggedIn?<Home/>:<LogInForm/>}
-  </Provider>
+    <span>...</span>
   </>)
 }
 

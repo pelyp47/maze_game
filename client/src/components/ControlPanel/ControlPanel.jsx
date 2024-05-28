@@ -3,8 +3,7 @@ import "./ControlPanel.css"
 import { useWSContext } from "../../views/Home/Home"
 import { currGameChatUpdate, currGameStateUpdate } from "../../globalState/CurrGame"
 
-export default function ControlPanel() {
-    const {id} = useSelector(state=> state.logIn)
+export default function ControlPanel({id}) {
     const {currGameId, yourMove} = useSelector(state=>state.currGame)
     const {WS} = useWSContext()
     const dispatch = useDispatch()

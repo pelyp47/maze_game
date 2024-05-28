@@ -17,11 +17,7 @@ const LogInSlice = createSlice({
         logIn: (state, action) => {
             state.name = action.payload.name
             state.id = action.payload.id
-            state.loggedIn = !!state.id&&!!state.name
-            if(state.loggedIn) {
-                localStorage.setItem("name", state.name)
-                localStorage.setItem("id", String(state.id))
-            }
+            state.loggedIn = action.payload.loggedIn
         },
         logOut: (state) => {
             state.name = ""

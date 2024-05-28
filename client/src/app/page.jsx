@@ -2,7 +2,7 @@ import App from "../App";
 
 
 
-export default async function RootPage() {
+export default function RootPage() {
     return (
       <App/>
     )
