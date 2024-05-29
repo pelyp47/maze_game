@@ -1,11 +1,17 @@
+"use client"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import Chat from "../../components/Chat/Chat"
 import Maze from "../../components/Maze/Maze"
 import ControlPanel from "../../components/ControlPanel/ControlPanel"
 import "./CurrGame.css"
+import { useSearchParams } from "next/navigation"
 
-export default function CurrGame({id}) {
+export default function CurrGame({mazeTranslation, controlPanelTranslation, chatTranslation}) {
+    const searchParams = useSearchParams()
+    const {id} = {
+        id: Number(searchParams.get("id"))
+    }
     const {gameTime, gameStarted} = useSelector(state=>state.currGame)
     const [time, setTime] = useState(new Date())
     useEffect(()=>{
@@ -42,9 +48,9 @@ export default function CurrGame({id}) {
     return <>
         {gameStarted?
         <div className="current-game">
-            <Chat id={id}/>
-            <Maze id={id}/>
-            <ControlPanel id={id}/>
+            <Chat id={id} chatTranslation={chatTranslation}/>
+            <Maze id={id} mazeTranslation={mazeTranslation}/>
+            <ControlPanel id={id} controlPanelTranslation={controlPanelTranslation}/>
         </div>:
         <div className="waiting-screen">
             <p className="waiting-screen__content">

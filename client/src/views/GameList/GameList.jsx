@@ -3,7 +3,7 @@ import { CurrGameJoin, currGameStateUpdate, currGameUpdate } from "../../globalS
 import "./GameList.css"
 import { useWSContext } from "../Home/Home";
 
-export default function GameList({id}) {
+export default function GameList({id, gameListTranslation}) {
     const dispatch = useDispatch()
     const {gameArray} = useSelector(state=>state.gameList)
     const {WS} = useWSContext()
@@ -44,9 +44,9 @@ export default function GameList({id}) {
             return <div className="game-list__item" key = {game.id}>
                 <time className="game-list__time">{time.getDate()+"."+(time.getMonth()+1)+" "+time.getHours()+":"+time.getMinutes()}</time>
                 <p className="game-list__name">{game.users[0].user.name}</p>
-                <button className="game-list__join" onClick={()=>joinGame(game.id)}>Join</button>
+                <button className="game-list__join" onClick={()=>joinGame(game.id)}>{gameListTranslation.joinButton}</button>
             </div>
         })}
-        <button className="game-list__new" onClick={()=>addGame()}>New game</button>
+        <button className="game-list__new" onClick={()=>addGame()}>{gameListTranslation.submitButton}</button>
     </div>
 }

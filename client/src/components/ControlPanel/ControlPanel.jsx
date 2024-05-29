@@ -3,7 +3,7 @@ import "./ControlPanel.css"
 import { useWSContext } from "../../views/Home/Home"
 import { currGameChatUpdate, currGameStateUpdate } from "../../globalState/CurrGame"
 
-export default function ControlPanel({id}) {
+export default function ControlPanel({id, controlPanelTranslation}) {
     const {currGameId, yourMove} = useSelector(state=>state.currGame)
     const {WS} = useWSContext()
     const dispatch = useDispatch()
@@ -25,9 +25,9 @@ export default function ControlPanel({id}) {
     }
     return <div className="control-panel">
 
-        <button className="control-panel__btn control-panel__btn_left" onClick={()=>makeMove(4)}>Left</button>
-        <button className="control-panel__btn control-panel__btn_down" onClick={()=>makeMove(3)}>Down</button>
-        <button className="control-panel__btn control-panel__btn_right" onClick={()=>makeMove(2)}>Right</button>
-        <button className="control-panel__btn control-panel__btn_up" onClick={()=>makeMove(1)}>Up</button>
+        <button className="control-panel__btn control-panel__btn_left" onClick={()=>makeMove(4)}>{controlPanelTranslation.leftButton}</button>
+        <button className="control-panel__btn control-panel__btn_down" onClick={()=>makeMove(3)}>{controlPanelTranslation.downButton}</button>
+        <button className="control-panel__btn control-panel__btn_right" onClick={()=>makeMove(2)}>{controlPanelTranslation.rightButton}</button>
+        <button className="control-panel__btn control-panel__btn_up" onClick={()=>makeMove(1)}>{controlPanelTranslation.upButton}</button>
     </div>
 }

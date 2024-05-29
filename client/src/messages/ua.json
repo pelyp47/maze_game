@@ -1,7 +1,21 @@
 {
     "Home": {
         "greetings": "Привіт, ",
-        "submitButton": "Нова гра"
+        "submitButton": "Нова гра",
+        "joinButton": "Приєднатись",
+        "oponentMoveIndicator": "Хід противника",
+        "yourMoveIndicator": "Ваш хід",
+        "upButton": "Вгору",
+        "rightButton": "Вправо",
+        "downButton": "Вниз",
+        "leftButton": "Вліво",
+        "giveUpButton": "здатись",
+        "exitButton": "вийти",
+        "sendMessageButton": "надіслати",
+        "you": " Ви",
+        "oponent": " Противник",
+        "youWon": "Ви виграли!",
+        "youLost": "Ви програли!"
     },
     "LogInForm": {
         "nameInputDescription": "Будь ласка, введіть своє ім'я:",

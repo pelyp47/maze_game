@@ -15,7 +15,7 @@ const WSContext = createContext()
 export const useWSContext = () => {
     return useContext(WSContext);
 };
-export default function Home({greetings}) {
+export default function Home({greetings, gameListTranslation, mazeTranslation, controlPanelTranslation, chatTranslation}) {
     const searchParams = useSearchParams()
     const dispatch = useDispatch()
     const [WS, setWS] = useState()
@@ -98,8 +98,10 @@ export default function Home({greetings}) {
     return <WSContext.Provider value={{WS}}>
         {currGameId===0?
         <><p className="home__greetings">{greetings}<span className="_highlighted">{name}</span></p>
-        <GameList id={id}/></>:
-        <CurrGame id={id}/>
+        <GameList id={id} gameListTranslation={gameListTranslation}/></>:
+        <CurrGame id={id} mazeTranslation={mazeTranslation}
+        controlPanelTranslation={controlPanelTranslation}
+        chatTranslation={chatTranslation}/>
         }
     </WSContext.Provider>
 }

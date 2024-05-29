@@ -4,7 +4,7 @@ import "./Chat.css"
 import { useWSContext } from "../../views/Home/Home"
 import { currGameChatUpdate, currGameStateUpdate } from "../../globalState/CurrGame"
 
-export default function Chat({id}) {
+export default function Chat({id, chatTranslation}) {
     const {currChat, currGameId, contextId, yourMove} = useSelector(state=>state.currGame)
     const dispatch = useDispatch()
     const messages = useRef(null)
@@ -52,18 +52,18 @@ export default function Chat({id}) {
     }
     console.log(currChat)
     return <div className="chat">
-        <p className={`chat__indicator ${yourMove?"_yours":"_oponents"}`}>{yourMove?"It is your move": "It is your oponent's move"}</p>
+        <p className={`chat__indicator ${yourMove?"_yours":"_oponents"}`}>{yourMove?chatTranslation.yourMoveIndicator:chatTranslation.oponentMoveIndicator}</p>
         <div className="chat__container" ref={messages}>{currChat.map(mes=>{
         return <div className={`message ${contextId===mes.contextId?"_yours":"_oponents"}`} key={mes.time+mes.contextId}>
             <p className="message__header">
-                {mes.contextId===null||<span>{contextId===mes.contextId?" You":" Oponent"}</span>}
+                {mes.contextId===null||<span>{contextId===mes.contextId?chatTranslation.you:chatTranslation.oponent}</span>}
                 <span>{new Date(mes.time).toTimeString("HH:mm:ss").split(" ")[0]}</span>
             </p>
             <p className="message__content">{mes.text}</p>
         </div>})}</div>
         <div className="chat__control">
         <input className="chat__input" type="text" onChange={(e)=>setMessage(e.target.value)} value={message}/>
-        <button className="chat__submit" onClick={()=>sendMessage()}>send</button>
+        <button className="chat__submit" onClick={()=>sendMessage()}>{chatTranslation.sendMessageButton}</button>
     </div>
     </div>
 }

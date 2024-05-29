@@ -3,7 +3,7 @@ import "./Maze.css"
 import { currGameChatUpdate, currGameLeave, currGameStateUpdate } from "../../globalState/CurrGame"
 import { updateGameList } from "../../globalState/GameList"
 import { useWSContext } from "../../views/Home/Home"
-export default function Maze() {
+export default function Maze({mazeTranslation}) {
     const {currMaze, winner, currGameId} = useSelector(state=>state.currGame)
     const dispatch = useDispatch()
     const {id} = useSelector(state=>state.logIn)
@@ -40,6 +40,6 @@ export default function Maze() {
                 })}
             </div>
         })}
-        <button className="maze__cancell-btn" onClick={()=>leave()}>{winner===null?"give up":"exit"}</button>
+        <button className="maze__cancell-btn" onClick={()=>leave()}>{winner===null?(mazeTranslation.giveUpButton):(mazeTranslation.exitButton)}</button>
     </div>
 }

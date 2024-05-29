@@ -1,7 +1,22 @@
 {
     "Home": {
         "greetings": "Hello, ",
-        "submitButton": "New game"
+        "submitButton": "New game",
+        "joinButton": "Join",
+        "waitingText": "",
+        "oponentMoveIndicator": "It is your oponent's move",
+        "yourMoveIndicator": "It is your move",
+        "upButton": "Up",
+        "rightButton": "Right",
+        "downButton": "Down",
+        "leftButton": "Left",
+        "giveUpButton": "give up",
+        "exitButton": "exit",
+        "sendMessageButton": "send",
+        "you": " You",
+        "oponent": " Oponent",
+        "youWon": "you won!",
+        "youLost": "you lost!"
     },
     "LogInForm": {
         "nameInputDescription": "Please enter your name:",
