@@ -1,5 +1,6 @@
 import React from 'react'
-import Providers from '../globalState/Providers'
+import Providers from '../globalState/Providers';
+import NextAuthProvider from './context/NextAuthProvider';
 import {NextIntlClientProvider} from 'next-intl';
 import {getLocale, getMessages} from 'next-intl/server';
 
@@ -17,11 +18,13 @@ export default function RootLayout({children}) {
       </head>
       <body>
       <div id="root">
+        <NextAuthProvider>
         <NextIntlClientProvider messages={messages}>
         <Providers>
             {children}
         </Providers>
         </NextIntlClientProvider>
+        </NextAuthProvider>
       </div>
       </body>
     </html>

@@ -1,11 +1,12 @@
 "use client"
 import './App.css'
 import {useRouter} from 'next/navigation';
-import Home from './views/Home/Home';
-import LogInForm from './views/LogInForm/LogInForm';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 function App() {
   const router = useRouter()
+  const session = useSession()
+  console.log(session)
   const [loggedIn, setLoggedIn] = useState(false)
   const [name, setName] = useState(localStorage.getItem("name"));
   const [id, setId] = useState(localStorage.getItem("id"));
@@ -31,6 +32,13 @@ function App() {
     }
     checkLoggedIn()
   }, [loggedIn, id, name])
+  useEffect(()=>{
+    if(session.status!=="loading"&&!session.data) {
+      signIn('first',  null, { login_hint: "dmytro.p@halo-lab.team" })
+    } else {
+      console.log(session)
+    }
+  }, [session])
   return (<>
     <span>...</span>
   </>)
