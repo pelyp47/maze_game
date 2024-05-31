@@ -40,3 +40,7 @@ potentially unsafe/untyped data with each request). Helps to check the data type
 ### Workflow notes
 
 There are two main ways to interact with the server: WebSocket for the real-time communication and REST API for regular HTTP requests. WebSocket logic is contained within the main index file. At the start, client fetches its ID by giving the `name` to `GET /user?name=..` endpoint; this ID used in further calls. Game state is updated each time via `utils/mazeState`, while database stores only starting positions.
+
+### OAS3
+
+There is a yaml description of `GET /user, POST /user` routes in `server/src/openapi/swagger.yaml`. The generated with `https://editor.swagger.io/` client lib files are in `/api-client` root folder.
