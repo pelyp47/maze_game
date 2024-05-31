@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../../lib/prisma";
 
 async function addPlayer(gameId:number, playerId:number) : Promise<{
     id: number;
@@ -18,7 +16,7 @@ async function addPlayer(gameId:number, playerId:number) : Promise<{
         });
         return newPlayerGameContext
     } catch (err) {
-        console.log(err);
+        
         throw err
     } finally {
         await prisma.$disconnect();

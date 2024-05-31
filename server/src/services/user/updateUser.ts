@@ -1,10 +1,8 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient()
+import prisma from "../../lib/prisma";
 
 async function updateUser(id:number, name:string, online:boolean) {
     try {
-        console.log(id, name, online);
+        
         if(id===0) throw new Error("id can't be 0")
         const updatedUser = await prisma.user.update({
             where: {
@@ -17,7 +15,7 @@ async function updateUser(id:number, name:string, online:boolean) {
         });
         return updatedUser
     } catch(err) {
-        console.log(err);
+        
     } finally {
         await prisma.$disconnect()
     }

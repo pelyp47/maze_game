@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import {utils} from "../../utils/";
-
-const prisma = new PrismaClient();
+import prisma from "../../lib/prisma";
 
 async function addGame() {
     try {
@@ -13,7 +11,7 @@ async function addGame() {
         });
         return newGame
     } catch(err) {
-        console.log(err);
+        
         throw err
     } finally {
         await prisma.$disconnect();

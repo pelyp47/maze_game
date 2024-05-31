@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../../lib/prisma";
 
 async function addMove(gameId:number, userId:number, move:{time: Date, commandId: number}) : Promise<{
     id: number;
@@ -16,7 +14,7 @@ async function addMove(gameId:number, userId:number, move:{time: Date, commandId
             }
         })
         if (!context) throw new Error("Context wasn't found")
-        console.log(move)
+        
         const newMove = await prisma.move.create({
             data: {
                 time: move.time,
@@ -26,7 +24,7 @@ async function addMove(gameId:number, userId:number, move:{time: Date, commandId
         })
         return newMove
     } catch (err) {
-        console.log(err);
+        
         throw err
     } finally {
         await prisma.$disconnect();

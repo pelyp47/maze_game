@@ -15,7 +15,7 @@ export async function getHandler(req:Request, res:Response) {
 }
 
 export async function postHandler(req:Request, res:Response) {
-    console.log(req.body)
+    
     const {name} = req.body
     try {
         nameSchema.parse(name);

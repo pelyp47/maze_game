@@ -10,7 +10,7 @@ export default async function mazeState(maze:Maze, moves:{
     winnerId: number | null;
 }> {
     const commands = await commandService.commandAll()
-    console.log(commands)
+    
     const playerIds: {[contextId:number]:number} = moves.reduce((obj,el,i)=> obj[el.contextId]?obj:({...obj, [el.contextId]:10+i}),{} as {[contextId:number]:number})
     const mazeBody = [...maze.body]
     const mazeParams: {
@@ -40,7 +40,7 @@ export default async function mazeState(maze:Maze, moves:{
         const {xChange, yChange} = command
         const searchedX:number = xPosition+xChange
         const searchedY:number = yPosition-yChange
-        console.log(searchedX, searchedY, Position, command, playerId)
+        
         if(searchedX<0 || searchedY<0 || searchedX>=mazeParams.width || searchedY>=mazeParams.length) return {body: maze, winnerId}
         const searchedElement:number = maze[searchedY][searchedX]
         const resultMaze:Maze["body"] = [...maze]
@@ -66,7 +66,7 @@ export default async function mazeState(maze:Maze, moves:{
             default:
                 break
         }
-        console.log(resultMaze)
+        
 
         return {body: resultMaze, winnerId}
     }

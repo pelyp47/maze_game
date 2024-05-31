@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(mainRouter);
 
 const server = app.listen(port, ()=>{
-    console.log(`http://${domain}:${port}`);
+    
 });
 
 //adding websockets
@@ -37,7 +37,7 @@ function closeOther(id:number) {
   })
 }
 WSServer.on('connection', async (ws, req) => {
-  console.log('New WebSocket client connected');
+  
   const id = req.url?.split('?')[1]?.split('=')[1]
   if(!id) {
     ws.close()
@@ -46,8 +46,8 @@ WSServer.on('connection', async (ws, req) => {
   const WSUser ={ws, id: Number(id)}
   closeOther(WSUser.id)
   WSUsers.push(WSUser)
-  console.log(WSUsers)
-  console.log(WSUser.id)
+  
+  
   const newUser = await userService.updateUser(WSUser.id, "", true)
   ws.on('message', async (message: string) => {
     const messageObj = JSON.parse(message)
@@ -79,17 +79,17 @@ WSServer.on('connection', async (ws, req) => {
   });
 
   ws.on('close', async () => {
-    console.log('close connection...');
+    
     const newUser = await userService.updateUser(Number(WSUser.id), "", false)
     closeOther(WSUser.id)
-    console.log(WSUsers)
+    
     return newUser
   });
   ws.on('error', async () => {
-    console.log('close connection...');
+    
     const newUser = await userService.updateUser(Number(WSUser.id), "", false)
     closeOther(WSUser.id)
-    console.log(WSUsers)
+    
     return newUser
   });
 });

@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../../lib/prisma";
 
 async function messageGame(gameId:number): Promise<{
     id: number;
@@ -16,7 +14,7 @@ async function messageGame(gameId:number): Promise<{
                 }
             }
         })
-        console.log(context)
+        
         if(!context) throw new Error("Context wasn't found")
         const messages = await prisma.message.findMany({
             where: {
@@ -27,7 +25,7 @@ async function messageGame(gameId:number): Promise<{
         })
         return messages
     } catch (err) {
-        console.log(err);
+        
         throw err
     } finally {
         await prisma.$disconnect();

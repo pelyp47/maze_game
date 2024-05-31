@@ -13,7 +13,7 @@ containerExists=$(docker ps -aq -f "name=postgres-container")
 if [ -z "$containerExists" ]; then
     # If the container doesn't exist, create and run it
     echo "PostgreSQL container not found. Creating and running..."
-    docker run --name postgres-container -e POSTGRES_PASSWORD=bebra228 -e POSTGRES_DB=test_game -e POSTGRES_USER=bober -p 5432:5432 -d postgres:alpine
+    docker run --name postgres-container -e POSTGRES_PASSWORD=lab -e POSTGRES_DB=test_game -e POSTGRES_USER=halo -p 5432:5432 -d postgres:alpine
 
     # Wait for the container to start
     echo "Waiting for PostgreSQL container to start..."

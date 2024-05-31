@@ -15,6 +15,6 @@ export async function getHandler(req:Request, res:Response) {
                                                  context.userId === Number(userId))
                                    && el.users.every(context=>
                                                      context.winner === false))
-    console.log(userCurrGame)
+    
     return res.json(userCurrGame)
 }

@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../../lib/prisma";
 
 async function messageUser(gameId:number, userId:number) {
     try {
@@ -18,7 +16,7 @@ async function messageUser(gameId:number, userId:number) {
         })
         return messages
     } catch (err) {
-        console.log(err);
+        
         throw err
     } finally {
         await prisma.$disconnect();

@@ -13,7 +13,7 @@ rem Check if the container with the given name already exists
 for /f "tokens=* USEBACKQ" %%F IN (`docker ps -aq -f "name=postgres-container"`) do set containerExists=%%F
 if "%containerExists%" == "" (
     rem If the container doesn't exist, create and run it
-    docker run --name postgres-container -e POSTGRES_PASSWORD=bebra228 -e POSTGRES_DB=test_game -e POSTGRES_USER=bober -p 5432:5432 -d postgres:alpine
+    docker run --name postgres-container -e POSTGRES_PASSWORD=lab -e POSTGRES_DB=test_game -e POSTGRES_USER=halo -p 5432:5432 -d postgres:alpine
 
     :waitloop
     timeout /t 20 > NUL

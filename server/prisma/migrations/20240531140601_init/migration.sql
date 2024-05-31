@@ -1,34 +1,30 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "online" BOOLEAN NOT NULL DEFAULT false,
 
-  - You are about to drop the column `winnerId` on the `Game` table. All the data in the column will be lost.
-  - You are about to drop the `Game_Message` table. If the table is not empty, all the data it contains will be lost.
-  - Added the required column `maze` to the `Game` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `online` to the `User` table without a default value. This is not possible if the table is not empty.
-  - Added the required column `winner` to the `User_Game` table without a default value. This is not possible if the table is not empty.
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
-*/
--- DropForeignKey
-ALTER TABLE "Game" DROP CONSTRAINT "Game_winnerId_fkey";
+-- CreateTable
+CREATE TABLE "User_Game" (
+    "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "gameId" INTEGER NOT NULL,
+    "winner" BOOLEAN NOT NULL DEFAULT false,
 
--- DropForeignKey
-ALTER TABLE "Game_Message" DROP CONSTRAINT "Game_Message_gameId_fkey";
+    CONSTRAINT "User_Game_pkey" PRIMARY KEY ("id")
+);
 
--- AlterTable
-ALTER TABLE "Game" DROP COLUMN "winnerId",
-ADD COLUMN     "maze" JSONB NOT NULL;
+-- CreateTable
+CREATE TABLE "Game" (
+    "id" SERIAL NOT NULL,
+    "maze" JSONB NOT NULL,
+    "time" TIMESTAMP(3) NOT NULL,
 
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "online" BOOLEAN NOT NULL;
-
--- AlterTable
-ALTER TABLE "User_Game" ADD COLUMN     "winner" BOOLEAN NOT NULL;
-
--- DropTable
-DROP TABLE "Game_Message";
-
--- DropEnum
-DROP TYPE "ValueType";
+    CONSTRAINT "Game_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Message" (
@@ -59,6 +55,18 @@ CREATE TABLE "Command" (
 
     CONSTRAINT "Command_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_name_key" ON "User"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Command_text_key" ON "Command"("text");
+
+-- AddForeignKey
+ALTER TABLE "User_Game" ADD CONSTRAINT "User_Game_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "User_Game" ADD CONSTRAINT "User_Game_gameId_fkey" FOREIGN KEY ("gameId") REFERENCES "Game"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Message" ADD CONSTRAINT "Message_contextId_fkey" FOREIGN KEY ("contextId") REFERENCES "User_Game"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

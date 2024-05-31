@@ -1,7 +1,7 @@
 {
   "name": "test_game",
   "version": "1.0.0",
-  "description": "**docker config:**\r ```\r docker pull postgres\r docker run --name postgres-container -e POSTGRES_PASSWORD=bebra228 -e POSTGRES_DB=test_game -e POSTGRES_USER=bober -p 5432:5432 -d postgres\r ```",
+  "description": "**docker config:**\r ```\r docker pull postgres\r docker run --name postgres-container -e POSTGRES_PASSWORD=lab -e POSTGRES_DB=test_game -e POSTGRES_USER=halo -p 5432:5432 -d postgres\r ```",
   "main": "index.js",
   "scripts": {
     "start-windows": "npm run start-db && start npm run start-server && start npm run start-client",

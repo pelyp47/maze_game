@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 async function main():Promise<void> {
     await commands()
-    console.log("commands added")
+    
 }
 
 async function commands():Promise<void> {

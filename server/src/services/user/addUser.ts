@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient()
+import prisma from "../../lib/prisma";
 
 async function addUser(name: string) {
     try {
@@ -12,7 +10,7 @@ async function addUser(name: string) {
         })
         return newUser
     } catch(err) {
-        console.log(err)
+        
     } finally {
         await prisma.$disconnect()
     }
