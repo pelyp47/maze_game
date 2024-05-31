@@ -11,6 +11,8 @@ function App() {
   const [name, setName] = useState(localStorage.getItem("name"));
   const [id, setId] = useState(localStorage.getItem("id"));
   useEffect(()=>{
+    localStorage.setItem("name", localStorage.getItem("name")||"")
+    localStorage.setItem("id", localStorage.getItem("id")||"")
     const checkLoggedIn = async ()=>{
       console.log(name)
       const fetchData = await fetch(`/api/checkUser/`, {

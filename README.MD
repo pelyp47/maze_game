@@ -5,15 +5,26 @@ DATABASE_URL="postgresql://bober:bebra228@host.docker.internal:5432/test_game?sc
 ```
 ./client/.env.deveopment
 ```
+VITE_DOMAIN = "http://localhost:3000"
+VITE_WS_DOMAIN = "ws://localhost:3000"
+
 NEXT_PUBLIC_DOMAIN = "http://localhost:3000"
 NEXT_PUBLIC_WS_DOMAIN = "ws://localhost:3000"
+NEXT_PUBLIC_BASE_PATH = ""
+NEXT_AUTH_SECRET = halloS
+
+AUTH0_CLIENT_ID = MYFUZRzidFwbBuqtoNkWCMIisMVTxClc
+AUTH0_CLIENT_SECRET = KH8VLU1SezLJ8NYvvC7JWV_cjrOpEpdkhyrVD-egKY4cA5N6Q5TzmBlOPeLcINGW
+AUTH0_DOMAIN = dev-6gbzpnkkzc3ylxa4.us.auth0.com
+AUTH0_ISSUER = https://dev-6gbzpnkkzc3ylxa4.us.auth0.com
+NEXTAUTH_URL = http://localhost:5173
 ```
-\
+<!-- \
 **windows**\
 you can use
 ```
 npm run start-windows
-```
+``` -->
 in powershell terminal in VSCode\
 or
 ```
