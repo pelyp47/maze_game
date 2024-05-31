@@ -1,0 +1,1 @@
+export type Maze = {width: number, length: number, body:number[][]}

@@ -2,9 +2,15 @@ import {Request, Response} from "express";
 import {moveService, gameService} from "../../services";
 import {utils} from "../../utils/";
 import { Maze } from "../../utils/createMaze";
+import { commandIdSchema, dateSchema, parsableToNumberSchema } from "../../types/zodValidation";
 
 export async function getHandler(req:Request, res:Response) {
     const {gameId} = req.params
+    try {
+        parsableToNumberSchema.parse(gameId);
+    } catch(err) {
+        return res.status(400).json({error: "invalid data"})
+    }
     const moves = await moveService.moveGame(Number(gameId))
     const games = await gameService.gameAll()
     const game = games.find(el=>el.id === Number(gameId))
@@ -17,6 +23,14 @@ export async function getHandler(req:Request, res:Response) {
 export async function postHandler(req:Request, res:Response) {
     const {gameId, playerId} = req.params
     const {time, commandId} = req.body
+    try {
+        parsableToNumberSchema.parse(gameId);
+        parsableToNumberSchema.parse(playerId);
+        dateSchema.parse(time)
+        commandIdSchema.parse(commandId);
+    } catch(err) {
+        return res.status(400).json({error: "invalid data"})
+    }
     //check if already moved
     const games = await gameService.gameAll()
     const game = games.find(el=>el.id === Number(gameId))

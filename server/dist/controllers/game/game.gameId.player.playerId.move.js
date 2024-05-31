@@ -3,8 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.postHandler = exports.getHandler = void 0;
 const services_1 = require("../../services");
 const utils_1 = require("../../utils/");
+const zodValidation_1 = require("../../types/zodValidation");
 async function getHandler(req, res) {
     const { gameId } = req.params;
+    try {
+        zodValidation_1.parsableToNumberSchema.parse(gameId);
+    }
+    catch (err) {
+        return res.status(400).json({ error: "invalid data" });
+    }
     const moves = await services_1.moveService.moveGame(Number(gameId));
     const games = await services_1.gameService.gameAll();
     const game = games.find(el => el.id === Number(gameId));
@@ -18,6 +25,15 @@ exports.getHandler = getHandler;
 async function postHandler(req, res) {
     const { gameId, playerId } = req.params;
     const { time, commandId } = req.body;
+    try {
+        zodValidation_1.parsableToNumberSchema.parse(gameId);
+        zodValidation_1.parsableToNumberSchema.parse(playerId);
+        zodValidation_1.dateSchema.parse(time);
+        zodValidation_1.commandIdSchema.parse(commandId);
+    }
+    catch (err) {
+        return res.status(400).json({ error: "invalid data" });
+    }
     //check if already moved
     const games = await services_1.gameService.gameAll();
     const game = games.find(el => el.id === Number(gameId));

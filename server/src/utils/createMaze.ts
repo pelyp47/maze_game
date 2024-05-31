@@ -1,3 +1,5 @@
+import { mazeSchema } from "../types/zodValidation";
+
 export type Maze = {width: number, length: number, body:number[][]}
 const MAZES: Maze[]= [
     {
@@ -52,6 +54,7 @@ const MAZES: Maze[]= [
 function createMaze():Maze {
     const mazeNumber:number = Math.floor(Math.random()*MAZES.length)
     const resultMaze = MAZES[mazeNumber]
+    mazeSchema.parse(resultMaze)
     return resultMaze
 }
 

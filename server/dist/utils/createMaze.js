@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const zodValidation_1 = require("../types/zodValidation");
 const MAZES = [
     {
         width: 10,
@@ -53,6 +54,7 @@ const MAZES = [
 function createMaze() {
     const mazeNumber = Math.floor(Math.random() * MAZES.length);
     const resultMaze = MAZES[mazeNumber];
+    zodValidation_1.mazeSchema.parse(resultMaze);
     return resultMaze;
 }
 exports.default = createMaze;

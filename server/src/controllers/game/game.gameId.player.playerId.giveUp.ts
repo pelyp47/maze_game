@@ -1,9 +1,16 @@
 import {Request, Response} from "express";
 import { gameService } from "../../services";
+import { parsableToNumberSchema } from "../../types/zodValidation";
 
 
 export async function getHandler(req:Request, res:Response) {
     const {gameId, playerId} = req.params
+    try {
+        parsableToNumberSchema.parse(gameId);
+        parsableToNumberSchema.parse(playerId);
+    } catch(err) {
+        return res.status(400).json({error: "invalid data"})
+    }
     const games = await gameService.gameAll()
     const game = games.find(el=>el.id === Number(gameId))
     console.log(game)
