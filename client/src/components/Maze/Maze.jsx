@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import "./Maze.css"
 import { currGameChatUpdate, currGameLeave, currGameStateUpdate } from "../../globalState/CurrGame"
 import { updateGameList } from "../../globalState/GameList"
-import { useWSContext } from "../../views/Home/Home"
+import { useWSContext } from "../../app/context/WSContext"
 export default function Maze({mazeTranslation}) {
     const {currMaze, winner, currGameId} = useSelector(state=>state.currGame)
     const dispatch = useDispatch()
@@ -10,7 +10,7 @@ export default function Maze({mazeTranslation}) {
     const {WS} = useWSContext()
     async function leave() {
         if(!winner) {
-            const winner = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${currGameId}/player/${id}/giveUp`)
+            await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${currGameId}/player/${id}/giveUp`)
             
             dispatch(currGameStateUpdate(id)).then(()=>{
                 dispatch(currGameChatUpdate(id)).then(()=>{

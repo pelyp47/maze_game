@@ -1,20 +1,23 @@
 "use client"
 import './App.css'
 import {useRouter} from 'next/navigation';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 function App() {
   const router = useRouter()
   const session = useSession()
-  console.log(session)
+  
   const [loggedIn, setLoggedIn] = useState(false)
   const [name, setName] = useState(localStorage.getItem("name"));
   const [id, setId] = useState(localStorage.getItem("id"));
+  
+  localStorage.setItem("name", localStorage.getItem("name")||"")
+  localStorage.setItem("id", localStorage.getItem("id")||"")
   useEffect(()=>{
     localStorage.setItem("name", localStorage.getItem("name")||"")
     localStorage.setItem("id", localStorage.getItem("id")||"")
     const checkLoggedIn = async ()=>{
-      console.log(name)
+      
       const fetchData = await fetch(`/api/checkUser/`, {
         method: "POST",
         body: JSON.stringify({name})
@@ -23,7 +26,7 @@ function App() {
       setName(data.name||name);
       setId(data.id||id);
       setLoggedIn(data.loggedIn);
-      console.log(data.loggedIn)
+      
       localStorage.setItem("name", data.name||name);
       localStorage.setItem("id", data.id||id)
       if(data.loggedIn) {
@@ -33,12 +36,10 @@ function App() {
       }
     }
     checkLoggedIn()
-  }, [loggedIn, id, name])
+  }, [router, loggedIn, id, name])
   useEffect(()=>{
     if(session.status!=="loading"&&!session.data) {
       signIn('first',  null, { login_hint: "dmytro.p@halo-lab.team" })
-    } else {
-      console.log(session)
     }
   }, [session])
   return (<>

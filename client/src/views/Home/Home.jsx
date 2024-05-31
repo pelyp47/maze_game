@@ -1,8 +1,7 @@
 "use client"
-import { createContext, useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import { WSContext } from "../../app/context/WSContext"
 import { useDispatch, useSelector } from "react-redux"
-import { logOut } from "../../globalState/LogIn"
-import { setWSClient } from "../../globalState/WebSocket"
 import { updateGameList } from "../../globalState/GameList"
 import GameList from "../GameList/GameList"
 import CurrGame from "../CurrGame/CurrGame"
@@ -10,11 +9,6 @@ import { currGameChatUpdate, currGameStateUpdate, currGameUpdate } from "../../g
 import store from "../../globalState/store"
 import { useSearchParams } from "next/navigation"
 import "./Home.css"
-
-const WSContext = createContext()
-export const useWSContext = () => {
-    return useContext(WSContext);
-};
 export default function Home({greetings, gameListTranslation, mazeTranslation, controlPanelTranslation, chatTranslation}) {
     const searchParams = useSearchParams()
     const dispatch = useDispatch()
@@ -25,7 +19,7 @@ export default function Home({greetings, gameListTranslation, mazeTranslation, c
         id: Number(searchParams.get("id")),
         loggedIn: Boolean(searchParams.get("loggedIn"))
     }
-    const {currGameId, gameStarted} = useSelector(state=>state.currGame)
+    const {currGameId} = useSelector(state=>state.currGame)
     useEffect(()=>{
         if(!id) return
         const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_DOMAIN}?id=${id}`)
@@ -35,18 +29,18 @@ export default function Home({greetings, gameListTranslation, mazeTranslation, c
         
         ws.onopen=()=>{
             setWS(ws)
-            console.log(id)
+            
             ws.onmessage=(message)=>{
-                console.log(message)
+                
                 const messageObj = JSON.parse(message.data)
-                console.log(messageObj)
+                
                 const type = messageObj.type
                 switch(type) {
                     case "GAME_CREATED":
                         dispatch(updateGameList())
                         break;
                     case "GAME_JOINED":
-                        console.log(currGameId)
+                        
                         if(store.getState().currGame.currGameId===messageObj.payload.gameId) {
                             dispatch(currGameUpdate(id)).then(()=>{
                                 dispatch(currGameStateUpdate(id))
@@ -72,9 +66,9 @@ export default function Home({greetings, gameListTranslation, mazeTranslation, c
                 }
             }
             ws.onclose = ()=>{
-                console.log("connection closed")
+                
                 setTimeout(()=>{
-                    console.log("retrying")
+                    
                     setRetry(retry+1)
                 }, 1000)
             } 

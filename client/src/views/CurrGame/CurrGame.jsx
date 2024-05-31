@@ -20,7 +20,7 @@ export default function CurrGame({mazeTranslation, controlPanelTranslation, chat
         return () =>{
             clearInterval(interval)
         }
-    }, [time])
+    }, [gameStarted, time])
     function countTime(createdAt, currTime) {
         const createdAtTime = new Date(createdAt)
         let difference = currTime.getTime()-createdAtTime.getTime()

@@ -7,9 +7,6 @@ export default function Page() {
     submitButton: t('submitButton'),
     joinButton: t('joinButton'),
   }
-  const waitingScreenTranslation = {
-
-  }
   const controlPanelTranslation = {
     "upButton": t("upButton"),
     "rightButton": t("rightButton"),

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { CurrGameJoin, currGameStateUpdate, currGameUpdate } from "../../globalState/CurrGame";
 import "./GameList.css"
-import { useWSContext } from "../Home/Home";
+import { useWSContext } from "../../app/context/WSContext";
 
 export default function GameList({id, gameListTranslation}) {
     const dispatch = useDispatch()
@@ -22,7 +22,7 @@ export default function GameList({id, gameListTranslation}) {
         WS.send(JSON.stringify({type: "GAME_CREATED"}))
     }
     async function joinGame(gameId) {
-        const game = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${gameId}/player`, {
+        await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${gameId}/player`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

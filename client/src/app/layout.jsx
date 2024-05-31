@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import Providers from '../globalState/Providers';
 import NextAuthProvider from './context/NextAuthProvider';
 import {NextIntlClientProvider} from 'next-intl';

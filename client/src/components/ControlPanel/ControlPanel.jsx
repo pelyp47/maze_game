@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import "./ControlPanel.css"
-import { useWSContext } from "../../views/Home/Home"
+import { useWSContext } from "../../app/context/WSContext"
 import { currGameChatUpdate, currGameStateUpdate } from "../../globalState/CurrGame"
 
 export default function ControlPanel({id, controlPanelTranslation}) {
@@ -9,7 +9,7 @@ export default function ControlPanel({id, controlPanelTranslation}) {
     const dispatch = useDispatch()
     async function makeMove(commandId) {
         if(!yourMove) return
-        const move = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${currGameId}/player/${id}/move`, {
+        await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${currGameId}/player/${id}/move`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

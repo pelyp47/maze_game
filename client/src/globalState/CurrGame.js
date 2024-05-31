@@ -62,7 +62,7 @@ const CurrGameSlice = createSlice({
             const game = action.payload[0]
             
             
-            console.log(game)
+            
             state.currGameId = game.id || 0
             if(state.currGameId == 0) return
             if(game.users) {
@@ -87,7 +87,7 @@ const CurrGameSlice = createSlice({
                     }
             })
             if(action.payload.moves.currState.winnerId!==null) {    
-                console.log(action.payload)
+                
                 moves.push({text: `You ${action.payload.moves.currState.winnerId===state.contextId?"won":"lost"}!`, time: moves[moves.length-1]?moves[moves.length-1].time:state.gameTime, contextId: null});
                 state.winner = action.payload.moves.currState.winnerId === state.contextId
             }
@@ -98,7 +98,7 @@ const CurrGameSlice = createSlice({
             if(action.payload.error) return
             if(action.payload.currState) {
                 state.currMaze = action.payload.currState.body
-                console.log(action.payload.moves)
+                
                 if(!action.payload.moves.length) return
                 state.yourMove =action.payload.moves[action.payload.moves.length - 1].contextId !== state.contextId
             }

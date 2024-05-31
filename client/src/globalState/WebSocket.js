@@ -8,7 +8,7 @@ const WSSlice = createSlice({
     reducers: {
         setWSClient: (state, action) => {
             state.WSClient.send = action.payload.WSSend
-            console.log(action.payload)
+            
         },
         sendMessage: (state,action) => {
             state.WSClient.send(JSON.stringify(action.payload))

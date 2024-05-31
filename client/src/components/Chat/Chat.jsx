@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import "./Chat.css"
-import { useWSContext } from "../../views/Home/Home"
+import { useWSContext } from "../../app/context/WSContext"
 import { currGameChatUpdate, currGameStateUpdate } from "../../globalState/CurrGame"
 
 export default function Chat({id, chatTranslation}) {
@@ -12,12 +12,12 @@ export default function Chat({id, chatTranslation}) {
     useEffect(()=>{
         messages.current.scrollTo(0, messages.current.scrollHeight)
     }, [currChat.length])
-    console.log(contextId)
+    
     const [message, setMessage] = useState("")
     async function sendMessage() {
         const text = message.trim()
         const commandId = ["/up", "/right", "/down", "/left"].indexOf(text)+1
-        console.log(commandId)
+        
         if(commandId!==0) {     
             if(!yourMove) return
             await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${currGameId}/player/${id}/move`, {
@@ -36,7 +36,7 @@ export default function Chat({id, chatTranslation}) {
             setMessage("")
             return
         }
-        const messageData = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${currGameId}/player/${id}/message`, {
+        await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/game/${currGameId}/player/${id}/message`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -50,7 +50,7 @@ export default function Chat({id, chatTranslation}) {
         WS.send(JSON.stringify({type:"MESSAGE", payload:{gameId:currGameId}}))
         setMessage("")
     }
-    console.log(currChat)
+    
     return <div className="chat">
         <p className={`chat__indicator ${yourMove?"_yours":"_oponents"}`}>{yourMove?chatTranslation.yourMoveIndicator:chatTranslation.oponentMoveIndicator}</p>
         <div className="chat__container" ref={messages}>{currChat.map(mes=>{

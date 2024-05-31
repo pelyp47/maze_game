@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import Auth0Provider from "next-auth/providers/auth0";
-console.log(NextAuth)
+
 export const authOptions = {
   debug: true,
   providers: [
