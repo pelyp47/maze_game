@@ -35,10 +35,17 @@ NEXTAUTH_URL = http://localhost:5173
 
 ## Starting the server & client
 
-Execute the following command from the root directory of the project in git-bash console (Docker should be up and running):
+Assuming all the pre-requisites (like 
 ```
-npm run start
+npm install
 ```
+for project root, client and server) has been ran, please do the following (from the root of the project, Docker should be up and running):
+```
+npm run remove-db
+npm start
+```
+After the console output stabilized (start-client and start-server sections), please open http://localhost:5173 in one browser and the same URL in another browser (or incognito mode, for example) to emulate separate two players
+
 
 *Note*: in case of an error initialazing project in either system with "start" script, please delete the created Docker container (and related volumes if this initial setup) and try again. You can use the following command from the project's root for that:
 ```

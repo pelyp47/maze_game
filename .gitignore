@@ -3,4 +3,4 @@
 ./next-env.d.ts
 dist/
 ./.env
-node_module
+node_modules
