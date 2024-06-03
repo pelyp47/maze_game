@@ -9,7 +9,7 @@ Create the `./server/.env` file with the following contents:
 ```
 PORT = 3000
 DOMAIN = "localhost"
-DATABASE_URL="postgresql://halo:lab@host.docker.internal:5432/test_game?schema=public"
+DATABASE_URL="postgresql://halo:lab@localhost:5432/test_game?schema=public"
 ```
 
 ## Preparing the client
@@ -40,7 +40,11 @@ Execute the following command from the root directory of the project in git-bash
 npm run start
 ```
 
-*Note*: in case of an error initialazing project in either system with "start" script, please delete the created Docker container (and related volumes if this initial setup) and try again.
+*Note*: in case of an error initialazing project in either system with "start" script, please delete the created Docker container (and related volumes if this initial setup) and try again. You can use the following command from the project's root for that:
+```
+npm run remove-db
+```
+
 
 ## Local database connection details (safe to put here)
 

@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start-windows": "npm run start-db && start npm run start-server && start npm run start-client",
-    "start": "npm run start-db-linux && start npm run start-server && start npm run start-client",
+    "start": "npm run start-db-linux && concurrently \"npm:start-server\" \"npm:start-client\"",
     "start-client": "cd ./client/ && npm run dev && start http://localhost:5173/",
     "start-server": "cd ./server/ && npm start",
     "start-db": "docker-start.cmd && npx prisma db seed",
-    "start-db-linux": "chmod +x docker-start.sh && bash docker-start.sh && cd ./server/ && npx prisma db seed"
-  },
+    "start-db-linux": "chmod +x docker-start.sh && bash docker-start.sh && cd ./server/ && npx prisma db seed",
+    "remove-db": "docker rm --force postgres-container"  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pelyp47/maze_game.git"
@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/pelyp47/maze_game/issues"
   },
-  "homepage": "https://github.com/pelyp47/maze_game#readme"
+  "homepage": "https://github.com/pelyp47/maze_game#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
 }
